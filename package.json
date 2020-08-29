@@ -38,7 +38,7 @@
     "eslint-plugin-import": "^2.22.0",
     "husky": "^4.2.5",
     "jest": "^26.2.2",
-    "lint-staged": "^10.2.11",
+    "lint-staged": "^10.2.13",
     "supertest": "^4.0.2",
     "ts-jest": "^26.1.4",
     "ts-mockito": "^2.6.1",
