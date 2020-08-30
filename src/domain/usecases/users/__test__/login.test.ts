@@ -1,11 +1,12 @@
 import 'reflect-metadata';
 import {
-    anything, deepEqual, instance, mock, strictEqual, when,
+    anything, deepEqual, instance, mock, when,
 } from 'ts-mockito';
 import { LoginUsecase } from '../login.usecase';
 import { UserService } from '../../../ports/user.service';
 import { TokenService } from '../../../ports/token.service';
 import { OauthService } from '../../../ports/oauth.service';
+import { Logger } from '../../../../infrastructure/logger/logger';
 
 describe('Login usecase', () => {
     const userService = mock<UserService>();
@@ -45,6 +46,7 @@ describe('Login usecase', () => {
         instance(oauthService),
         instance(userService),
         instance(tokenService),
+        new Logger(),
     );
 
     describe('Existing user', () => {
