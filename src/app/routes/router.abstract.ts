@@ -1,6 +1,7 @@
 import {
     NextFunction, Router, Response, Request,
 } from 'express';
+import { injectable } from 'inversify';
 import { MiddlewareInterface } from './interfaces/middleware.interface';
 
 type PreMiddleware = (req: any, res: Response, next: NextFunction) => Promise<void>;
@@ -21,6 +22,7 @@ function buildHandler(finalMiddleware: MiddlewareInterface) {
     };
 }
 
+@injectable()
 export abstract class RouterAbstract {
     protected constructor(
         protected router: Router = Router(),

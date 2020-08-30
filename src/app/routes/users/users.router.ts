@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { RouterAbstract } from '../router.abstract';
 import { LoginMiddleware } from './middlewares/login.middleware';
 import { SelfInfoMiddleware } from './middlewares/selfInfo.middleware';
@@ -7,9 +7,9 @@ import { AuthMiddleware } from '../middlewares/auth.middleware';
 @injectable()
 export class UsersRouter extends RouterAbstract {
     constructor(
-        private loginMiddleware: LoginMiddleware,
-        private selfInfoMiddleware: SelfInfoMiddleware,
-        private auth: AuthMiddleware,
+        @inject(LoginMiddleware) private loginMiddleware: LoginMiddleware,
+        @inject(SelfInfoMiddleware) private selfInfoMiddleware: SelfInfoMiddleware,
+        @inject(AuthMiddleware) private auth: AuthMiddleware,
     ) {
         super();
 

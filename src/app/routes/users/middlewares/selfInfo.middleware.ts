@@ -1,10 +1,12 @@
+import { inject, injectable } from 'inversify';
 import { InfoUsecase } from '../../../../domain/usecases/users/info.usecase';
 import { MiddlewareInterface } from '../../interfaces/middleware.interface';
 import { UserRequestInterface } from '../../interfaces/userRequest.interface';
 
+@injectable()
 export class SelfInfoMiddleware implements MiddlewareInterface {
     constructor(
-        private infoUsecase: InfoUsecase,
+        @inject(InfoUsecase) private infoUsecase: InfoUsecase,
     ) {
     }
 

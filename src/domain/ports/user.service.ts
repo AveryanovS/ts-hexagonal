@@ -1,6 +1,6 @@
 import { UserEntity } from '../entities/user.entity';
 
-interface UserCreateData {
+export interface UserCreateData {
     email: string,
     name: string,
     oauthSub: string,

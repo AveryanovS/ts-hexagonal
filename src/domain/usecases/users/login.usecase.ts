@@ -1,4 +1,4 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { ResultInterface, UsecaseInterface } from '../usecase.interface';
 import { OauthService } from '../../ports/oauth.service';
 import { UserService } from '../../ports/user.service';
@@ -15,6 +15,8 @@ interface Result extends ResultInterface {
         token: string,
     }
 }
+
+@injectable()
 export class LoginUsecase implements UsecaseInterface<Data, unknown> {
     constructor(
         @inject(TYPES.OauthService) private oauthService: OauthService,
