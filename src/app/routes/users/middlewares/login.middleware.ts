@@ -10,7 +10,7 @@ export class LoginMiddleware implements MiddlewareInterface {
         @inject(LoginUsecase) private usecase: LoginUsecase,
     ) { }
 
-    exec(req: Request): Promise<any> {
+    async exec(req: Request): Promise<any> {
         const data = validate(req.body);
         return this.usecase.exec(data);
     }

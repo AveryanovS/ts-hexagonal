@@ -23,10 +23,10 @@ export class MongoDatabase {
         });
         this.mongoose.set('useCreateIndex', true);
         this.mongoose.connection.on('connected', () => {
-            logger.info('Connected to mongo db', connectionString);
+            logger.info('Connected to mongo db %s', connectionString);
         });
         this.mongoose.connection.on('error', (error) => {
-            logger.error('Mongoose connection error', error);
+            logger.error('Mongoose connection error %o', error);
             process.exit(1);
         });
     }

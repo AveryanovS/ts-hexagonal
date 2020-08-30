@@ -20,8 +20,8 @@ class Server {
     ) {
         this.app = express();
 
-        this.app.use((req, _res, next) => {
-            logger.info(req.method, req.url);
+        this.app.use((req: Request, _res, next: NextFunction) => {
+            logger.info('%s %s', req.method, req.originalUrl);
             next();
         });
 
@@ -41,7 +41,7 @@ class Server {
         });
 
         this.app.use((err: any, req: Request, res: Response, _next: any) => {
-            this.logger.error(new Date(), req.url, err);
+            this.logger.error(req.originalUrl, err);
 
             if (!isBoom(err)) {
                 err = boomify(err);

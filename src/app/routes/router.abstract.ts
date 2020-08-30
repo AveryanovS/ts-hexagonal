@@ -4,8 +4,6 @@ import {
 import { injectable } from 'inversify';
 import { MiddlewareInterface } from './interfaces/middleware.interface';
 
-type PreMiddleware = (req: any, res: Response, next: NextFunction) => Promise<void>;
-
 function handleError(error: Error, next: NextFunction) {
     return next(error);
 }
@@ -15,13 +13,19 @@ function handleSuccess(data: unknown, res: Response) {
 }
 
 function buildHandler(finalMiddleware: MiddlewareInterface) {
-    return async function (req: Request, res: Response, next: NextFunction) {
+    return function (req: Request, res: Response, next: NextFunction) {
         finalMiddleware.exec(req)
             .then((data) => handleSuccess(data, res))
             .catch((error) => handleError(error, next));
     };
 }
 
+function buildPreHandler(middleware: MiddlewareInterface) {
+    return function (req: Request, res: Response, next: NextFunction) {
+        return middleware.exec(req, res, next)
+            .catch(next);
+    };
+}
 @injectable()
 export abstract class RouterAbstract {
     protected constructor(
@@ -29,32 +33,28 @@ export abstract class RouterAbstract {
     ) {
     }
 
-    get(url: string, finalMiddleware: MiddlewareInterface, ...preMiddlewares: PreMiddleware[]) {
-        this.router.get(url, ...preMiddlewares, buildHandler(finalMiddleware));
-    }
-
-    post(url: string, finalMiddleware: MiddlewareInterface, ...preMiddlewares: PreMiddleware[]) {
-        this.router.post(url, ...preMiddlewares, buildHandler(finalMiddleware));
-    }
-
-    put(url: string, finalMiddleware: MiddlewareInterface, ...preMiddlewares: PreMiddleware[]) {
-        this.router.put(url, ...preMiddlewares, buildHandler(finalMiddleware));
-    }
-
-    delete(
+    get(
         url: string,
         finalMiddleware: MiddlewareInterface,
-        ...preMiddlewares: PreMiddleware[]
+        ...preMiddlewares: MiddlewareInterface[]
     ) {
-        this.router.delete(url, ...preMiddlewares, buildHandler(finalMiddleware));
+        this.router.get(
+            url,
+            ...(preMiddlewares.map((e) => buildPreHandler(e))),
+            buildHandler(finalMiddleware),
+        );
     }
 
-    patch(
+    post(
         url: string,
         finalMiddleware: MiddlewareInterface,
-        ...preMiddlewares: PreMiddleware[]
+        ...preMiddlewares: MiddlewareInterface[]
     ) {
-        this.router.patch(url, ...preMiddlewares, buildHandler(finalMiddleware));
+        this.router.post(
+            url,
+            ...(preMiddlewares.map((e) => buildPreHandler(e))),
+            buildHandler(finalMiddleware),
+        );
     }
 
     addRouter(url: string, router: RouterAbstract) {

@@ -14,9 +14,11 @@ export class AuthMiddleware implements MiddlewareInterface {
     }
 
     async exec(req: UserRequestInterface, _res: Response, next: NextFunction): Promise<void> {
-        const token = String(req.headers['x-access-token']);
+        const token = req.headers['x-access-token'];
         if (!token) { return next(unauthorized(ERRORS.ACCESS_TOKEN_REQUIRED)); }
-        req.user = (await this.authUsecase.exec({ token })).data;
+        req.user = (await this.authUsecase.exec({
+            token: String(token),
+        })).data;
         return next();
     }
 }

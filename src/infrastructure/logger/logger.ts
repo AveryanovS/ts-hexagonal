@@ -6,6 +6,7 @@ export class Logger {
     constructor(
         private logger: any = pino({
             name: 'app',
+            level: 'info',
         }),
     ) {
     }

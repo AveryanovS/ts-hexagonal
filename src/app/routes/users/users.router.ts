@@ -7,13 +7,13 @@ import { AuthMiddleware } from '../middlewares/auth.middleware';
 @injectable()
 export class UsersRouter extends RouterAbstract {
     constructor(
-        @inject(LoginMiddleware) private loginMiddleware: LoginMiddleware,
-        @inject(SelfInfoMiddleware) private selfInfoMiddleware: SelfInfoMiddleware,
-        @inject(AuthMiddleware) private auth: AuthMiddleware,
+    @inject(LoginMiddleware) loginMiddleware: LoginMiddleware,
+        @inject(SelfInfoMiddleware) selfInfoMiddleware: SelfInfoMiddleware,
+        @inject(AuthMiddleware) authMiddleware: AuthMiddleware,
     ) {
         super();
 
-        this.get('/', selfInfoMiddleware, auth.exec);
+        this.get('/', selfInfoMiddleware, authMiddleware);
         this.post('/login', loginMiddleware);
     }
 }
