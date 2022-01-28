@@ -17,11 +17,7 @@ export class MongoDatabase {
         const DB_NAME = config.dbName;
         const connectionString = `${DB_URI}/${DB_NAME}`;
 
-        this.mongoose.connect(connectionString, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        this.mongoose.set('useCreateIndex', true);
+        this.mongoose.connect(connectionString);
         this.mongoose.connection.on('connected', () => {
             logger.info('Connected to mongo db %s', connectionString);
         });

@@ -23,7 +23,7 @@ export class UserServiceImpl implements UserService {
     constructor(
     @inject(MongoDatabase) mongo: MongoDatabase,
     ) {
-        this.model = mongo.registerModel<UserDocument>('user', new Schema<UserDocument>({
+        const userSchema: Schema<UserDocument> = new Schema<UserDocument>({
             _id: {
                 type: String,
                 default: simpleflake,
@@ -42,7 +42,8 @@ export class UserServiceImpl implements UserService {
             },
         }, {
             timestamps: true,
-        }));
+        });
+        this.model = mongo.registerModel<UserDocument>('user', userSchema);
     }
 
     async create(data: UserCreateData): Promise<UserEntity> {
