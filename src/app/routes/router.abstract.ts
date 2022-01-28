@@ -28,7 +28,7 @@ function buildPreHandler(middleware: MiddlewareInterface) {
 }
 @injectable()
 export abstract class RouterAbstract {
-    protected constructor(
+    constructor(
         protected router: Router = Router(),
     ) {
     }
