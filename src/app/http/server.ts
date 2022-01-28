@@ -4,13 +4,13 @@ import express, {
 import { isBoom, boomify, notFound } from '@hapi/boom';
 import cors from 'cors';
 import { inject, injectable } from 'inversify';
-import { Config } from '../config/config';
+import { Config } from '../../config/config';
 import { RootRouter } from './routes/root.router';
-import { Logger } from '../infrastructure/logger/logger';
-import { ERRORS } from '../errors';
+import { Logger } from '../../infrastructure/logger/logger';
+import { ERRORS } from '../../errors';
 
 @injectable()
-class Server {
+class HttpServer {
     private readonly app: Application;
 
     constructor(
@@ -51,12 +51,12 @@ class Server {
         });
     }
 
-    async listen(): Promise<string> {
+    async listen(): Promise<number> {
+        this.logger.info('[http] starting at %d', this.config.port);
         return new Promise((resolve, _reject) => {
             this.app.listen(this.config.port, () => {
-                const listenMessage = `Listening on ${this.config.port} port`;
-                this.logger.info(listenMessage);
-                resolve(listenMessage);
+                this.logger.info('[http] listening at %d', this.config.port);
+                resolve(0);
             });
         });
     }
@@ -66,4 +66,4 @@ class Server {
     }
 }
 
-export { Server };
+export { HttpServer };

@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi';
 import { badRequest } from '@hapi/boom';
-import { ERRORS } from '../../../../errors';
+import { ERRORS } from '../../../../../errors';
 
 interface LoginData {
     accessToken: string,

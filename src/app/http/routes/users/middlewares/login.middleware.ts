@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { inject, injectable } from 'inversify';
 import { validate } from '../validation/login.validator';
-import { LoginUsecase } from '../../../../domain/usecases/users/login.usecase';
+import { LoginUsecase } from '../../../../../domain/usecases/users/login.usecase';
 import { MiddlewareInterface } from '../../interfaces/middleware.interface';
 
 @injectable()

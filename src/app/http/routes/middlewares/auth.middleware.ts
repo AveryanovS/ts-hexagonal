@@ -2,8 +2,8 @@ import { NextFunction, Response } from 'express';
 import { unauthorized } from '@hapi/boom';
 import { inject, injectable } from 'inversify';
 import { MiddlewareInterface } from '../interfaces/middleware.interface';
-import { AuthUsecase } from '../../../domain/usecases/users/auth.usecase';
-import { ERRORS } from '../../../errors';
+import { AuthUsecase } from '../../../../domain/usecases/users/auth.usecase';
+import { ERRORS } from '../../../../errors';
 import { UserRequestInterface } from '../interfaces/userRequest.interface';
 
 @injectable()
